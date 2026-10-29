@@ -1,0 +1,56 @@
+---
+layout: runbook
+title: '#4471 split: three problems, not one'
+owner: Kevin Grammer
+status: draft
+reviewed: 2026-10-28
+signature: Kevin Grammer
+---
+
+<script>
+  import ProblemTable from '#lib/kb/ProblemTable.svelte';
+  import Callout from '#lib/kb/Callout.svelte';
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
+
+  const repo = 'https://github.com/kevingrammer/mega-what-it-shows/issues';
+  const tickets = { parser: `${repo}/1`, hint: `${repo}/2`, shift: `${repo}/3` };
+</script>
+
+[#4471](/kb/incidents/4471) says one bug: the parser reads dates month first. The reports
+merged into it describe three. Each now has its own ticket.
+
+<ProblemTable ticket={4471} {tickets} />
+
+<Callout kind="warn">
+#4471 is marked known with one fix queued. That fix covers <code>parser</code> only.
+The other two keep coming after it ships.
+</Callout>
+
+## The three problems
+
+**`parser`: day and month flipped.** The shared parser reads every date month first. Every
+tenant on file writes the day first, so 7 April comes out as 4 July. It covers every tenant and every
+channel except the booking-v3 form.
+
+**`hint`: the booking-v3 form tells people to type month first.** booking-v3 prints
+`MM/DD/YYYY` under its date field, then reads the date the tenant's way, day first. People
+type what the hint says and the date flips. Only tenants on booking-v3, only through the
+form. The parser fix does not touch it: the fix is the hint.
+
+**`shift`: the date moves by one day.** These reports are not a flip. Tuesday 6 October shows
+as Monday; a client in Lisbon gets Tuesday and one in Toronto gets Monday; an invite arrives
+before the booking was made. That reads as a time-zone or offset bug in how the invite date is
+built. The desk spotted these (desk notes) but filed them under `parser` by tenant.
+
+## Why they were merged
+
+[Decision 0001](/kb/decisions/0001-dedupe-by-subject) merges on subject line. All three
+problems produce the same subjects ("Wrong day on the invite", "Date is wrong"), so subject
+matching cannot tell them apart. Intake's tag cannot either: it guesses from the reporter's
+browser, and the table counts how often it disagrees.
+
+Sort a date report by its **tenant** (locale and booking form), its **channel**, and **what
+the body says happened** (flip or one-day move), not by its subject. 0001 stays as it is; a
+new decision record should replace it.
+
+<RenderStamp {signature} />
