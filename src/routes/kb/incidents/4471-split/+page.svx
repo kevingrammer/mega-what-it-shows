@@ -4,7 +4,7 @@ title: '#4471 split: three problems, not one'
 owner: Kevin Grammer
 status: open
 reviewed: 2026-10-28
-signature: Kevin Grammer
+signature: 'v1.eyJzdWIiOiIyNTk5IiwiYXVkIjoiY2hhbGxlbmdlOndoYXQtaXQtc2hvd3MiLCJpYXQiOjE3OTMyNDA0NjMsImV4cCI6MTc5MzMyNjg2M30.Qxv7xuKeXEb7_4_FWzRyGn-IyWXvaYUXpONzcgkC9CU'
 ---
 
 <script>
