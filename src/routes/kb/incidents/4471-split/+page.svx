@@ -40,7 +40,8 @@ form. The parser fix does not touch it: the fix is the hint.
 **`shift`: the date moves by one day.** These reports are not a flip. Tuesday 6 October shows
 as Monday; a client in Lisbon gets Tuesday and one in Toronto gets Monday; an invite arrives
 before the booking was made. That reads as a time-zone or offset bug in how the invite date is
-built. The desk spotted these (desk notes) but filed them under `parser` by tenant.
+built. The desk spotted these (desk notes) and filed them under `parser` by tenant; they stay
+counted there and are counted again here.
 
 ## Why they were merged
 

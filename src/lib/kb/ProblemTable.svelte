@@ -35,6 +35,13 @@
   </tbody>
 </table>
 
+{#each split.groups as g (g.problem)}
+  {#if g.shifted}
+    <p class="note">{g.shifted} of the <code>{g.problem}</code> reports are one-day moves: filed under <code>{g.problem}</code> by tenant, counted again under <code>shift</code>.</p>
+  {/if}
+{/each}
+
 <style>
   .sum { font-size: 1.1rem; }
+  .note { color: var(--muted); font-size: 0.85em; }
 </style>
